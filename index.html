@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>To DO List</title>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script src="./js/firebase.js"></script>
+</head>
+
+<body>
+  <main>
+    <section class="section-login">
+      <header class="form-header">
+        <span class="material-icons" style="opacity:0.9;padding-top:50px;color:#006bff;font-size: 100px;">
+          fact_check
+        </span>
+        <span class="registering" style="display:none"></span>
+      </header>
+      <form class="form" action="">
+        <label for="email"></label>
+        <span style="display:flex;justify-content: center;">
+          <span class="material-icons email" style="padding-top:5px;color:#adb4c4;font-size: 20px;margin-right:5px">
+            mail
+          </span style="display:flex;justify-content: center;">
+          <input type="email" name="" id="email" placeholder="Email">
+        </span>
+        <label for="password"></label>
+        <span style="display:flex;justify-content: center;align-items: center;">
+          <span class="material-icons password" style="color:#adb4c4;font-size: 20px;margin-right:5px">
+            lock
+          </span>
+          <input type="password" id="password" placeholder="Senha" autocomplete="cc-csc">
+          <span onclick="passwordVisible(this)" class="material-icons password-visibility-hidden"
+            style="cursor:pointer;position:absolute;right:7.5%;opacity:0.9;padding-bottom:8px;color:#adb4c4;font-size: 20px">
+            visibility
+          </span>
+          <span onclick="passwordVisible(this)" class="material-icons password-visibility-visible"
+            style="cursor:pointer;display:none;position:absolute;right:7.5%;opacity:0.9;padding-bottom:8px;color:#006bff;font-size: 20px">
+            visibility_off
+          </span>
+        </span>
+        <p><a style="font-size:13px;font-weight: 600;" class="forgot-password" onclick="sendPasswordResetEmail()"
+            href="#">Esqueceu a
+            senha?</a></p>
+        <span style="display:flex; flex-direction:column;align-items:center;justify-content:space-between">
+          <input id="form-login" type="submit" value="Login">
+          <input id="form-register" type="submit" value="Cadastre-se">
+        </span>
+        <span style="display:flex; justify-content: center;margin-top:20px;">
+          <a href="#" onclick="signInWithGoogle()"><img src="img\google.png" alt="" style="width:25px;"></a>
+          <a href="#" onclick="signInWithGitHub()" style="margin:0 20% 20%;"><img src="img\placa-do-github.png" alt=""
+              style="width:25px;"></a>
+          <a href="#" onclick="signInWithFacebook()"><img src="\img\facebook.png" alt="" style="width:25px;"></a>
+        </span>
+      </form>
+    </section>
+    <section class="section-todo" style="display:none">
+      <header>
+        <nav class="menu">
+          <ul>
+            <li class="menu-perfil" onchange="toggleMenu()">
+              <div class="container">
+                <div class="box">
+                  <label class="label-hamburguer" for="check">
+                    <input type="checkbox" id="check">
+                    <div class="traco0"></div>
+                    <div class="traco1"></div>
+                    <div class="traco2"></div>
+                  </label>
+                </div>
+              </div>
+              </div>
+            <li class="menu-hide">
+              <ul class="menu-toggle-menu">
+                <li class="menu-main">
+                  <ul>
+                    <li class="menu-li-perfil" style="padding:40px;margin-bottom:25px;">
+                      <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                        <div> <img class="img-perfil"  style="width:55px;height:55px;border-radius: 50%;display:none "alt="">
+                          <span class="material-icons img-perfil-avatar" style="font-size: 60px; display: none;">
+                            account_circle
+                          </span>
+                          <span class="material-icons" style="font-size: 17px;">
+                            add_a_photo
+                          </span>
+                        </div>
+                        <span style="display: flex;align-items: center;">
+                          <div class="menu-email"></div>
+                          <span onclick="editName()" class="material-icons" style="font-size:15px; margin-left:10px;">
+                            edit
+                          </span>
+                      </div>
+                    </li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </li>
+                <li class="menu-perfil-logout" onclick="logout()" style="margin-top: 10px;">Sair</li>
+              </ul>
+            </li>
+          </ul>
+          </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="todo-main" onclick="menuHide()">
+        Olá
+        <div class="edit-name show-edit-name">
+          <form class="form" style="margin-top: -200px;">
+            <label for="email"></label>
+            <span style="display:flex;justify-content: center;color:#adb4c4">
+              <span class="material-icons" style="display:flex;justify-content: center;color:#adb4c4">
+                account_box
+              </span>
+              <input id="edit-name-field" type="text" name="" placeholder="Nome"
+                style="border:none;border-bottom:1px solid #adb4c4;padding:2px;"><span class="material-icons">
+                edit
+              </span>
+            </span>
+            <input style=" 
+            display:flex;
+            margin:auto;
+            justify-content: center; 
+            width: 75%;
+            margin-top:20px;
+            background: #006bff;
+            color:white;
+            font-weight: 700;
+            height: 30px; 
+            border-radius:4px; 
+            border:none;
+            cursor: pointer;" type="button" value="Editar" onclick="editNameField()">
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/utils.js"></script>
+  <script src="./js/auth.js"></script>
+</body>
+
+</html>
+
+<!-- 
+
+<div class="email-verified" style="">                 
+  <p>Email não verificado</p>
+</div>              
+</li>
+<li>                 
+<button onclick="sendEmailVerification()">Verificar Email</button>
+</li> -->
